@@ -148,6 +148,13 @@ class TreeEditor(admin.ModelAdmin):
                     self.list_display_links, self.list_filter, self.date_hierarchy,
                     self.search_fields, self.list_select_related,
                     self.list_per_page, self.list_editable, self)
+            elif django.VERSION[0] == 2 and django.VERSION[1] >= 1:
+                params = (
+                    request, self.model, list_display,
+                    self.list_display_links, self.list_filter, self.date_hierarchy,
+                    self.search_fields, self.list_select_related,
+                    self.list_per_page, self.list_max_show_all,
+                    self.list_editable, self, self.sortable_by)
             else:
                 params = (
                     request, self.model, list_display,
@@ -240,6 +247,7 @@ class TreeEditor(admin.ModelAdmin):
             'action_form': action_form,
             'actions_on_top': self.actions_on_top,
             'actions_on_bottom': self.actions_on_bottom,
+            'opts': opts,
         }
         if django.VERSION[0] == 1 and django.VERSION[1] < 4:
             context['root_path'] = self.admin_site.root_path
